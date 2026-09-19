@@ -11,10 +11,21 @@ const starterUpdates = [
     ],
     discussion: ["Confirm the remaining SKO upgrade validation and rollout sequence.", "Agree the TWAMP SFP test setup and validation plan with Mr. Navin.", "Confirm Azure VM readiness and deployment prerequisites for Gujarat Private 5G monitoring."],
     nextSteps: ["Apply the validated TAC workaround to the remaining SKO upgrades.", "Finalize the RJIO TWAMP Enterprise test and rollout plan.", "Validate the Gujarat VM deployment and resolve TWAMP dashboard test findings."]
+  },
+  {
+    id: "2026-09-01", title: "01 Sep 2026", period: "01 - 14 Sep 2026",
+    summary: "Established the reporting baseline and completed the first pass of KPI mapping. The next cycle will concentrate on validation and operational readiness.",
+    tasks: [
+      { title: "KPI inventory", owner: "Rishabh", status: "complete", detail: "Consolidated available circuit, hostname, and RT KPI source files." },
+      { title: "Mapping rules", owner: "Rishabh", status: "complete", detail: "Implemented the initial enterprise circuit matching rules." },
+      { title: "Stakeholder validation", owner: "Project team", status: "progress", detail: "Reviewing report definitions and exception categories." }
+    ],
+    discussion: ["Validate KPI definitions with operations.", "Confirm the production reporting cadence."],
+    nextSteps: ["Address validation findings.", "Prepare operational handover material."]
   }
 ];
 
-let updates = JSON.parse(localStorage.getItem(storageKey) || "null") || starterUpdates;
+let updates = (JSON.parse(localStorage.getItem(storageKey) || "null") || starterUpdates).filter((update) => update.id !== "2026-09-01");
 let currentId = new URLSearchParams(location.search).get("update") || updates[0].id;
 let activeFilter = "all";
 const $ = (selector) => document.querySelector(selector);
@@ -49,18 +60,7 @@ function taskLines(tasks) { return tasks.map((task) => `${task.title} | ${task.o
 function openEditor(isNew) {
   const update = currentUpdate(); const form = $("#update-form"); form.reset(); form.dataset.mode = isNew ? "new" : "edit";
   $("#dialog-title").textContent = isNew ? "New bi-weekly update" : "Edit bi-weekly update";
-  if (!isNew) {
-    const setField = (name, value) => {
-      const field = form.elements.namedItem(name);
-      if (field) field.value = value ?? "";
-    };
-    setField("title", update.title);
-    setField("period", update.period);
-    setField("summary", update.summary);
-    setField("tasks", taskLines(update.tasks));
-    setField("discussion", update.discussion.join("\n"));
-    setField("nextSteps", update.nextSteps.join("\n"));
-  }
+  if (!isNew) Object.assign(form.elements, { title: { value: update.title }, period: { value: update.period }, summary: { value: update.summary }, tasks: { value: taskLines(update.tasks) }, discussion: { value: update.discussion.join("\n") }, nextSteps: { value: update.nextSteps.join("\n") } });
   $("#editor-dialog").showModal(); refreshIcons();
 }
 
