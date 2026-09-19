@@ -15,6 +15,95 @@
       <header class="masthead">
         <div>
           <p class="eyebrow">MANAGEMENT BRIEFING</p>
+          <h1>Bi Weekly updates JIO</h1>
+          <p class="subtitle">A working record of priorities, delivery, and decisions.</p>
+        </div>
+        <div class="header-actions">
+          <button class="icon-button" id="copy-link" aria-label="Copy page link" title="Copy page link"><i data-lucide="link"></i></button>
+          <button class="icon-button" id="export-data" aria-label="Export updates" title="Export updates"><i data-lucide="download"></i></button>
+        </div>
+      </header>
+
+      <section class="overview" aria-label="Current update summary">
+        <div class="edition-control">
+          <label for="edition-select">Edition</label>
+          <select id="edition-select" aria-label="Select bi-weekly update"></select>
+        </div>
+        <div class="summary-stat"><span id="completed-count">0</span><small>completed</small></div>
+        <div class="summary-stat"><span id="in-progress-count">0</span><small>in progress</small></div>
+        <div class="summary-stat"><span id="blocked-count">0</span><small>needs input</small></div>
+        <button class="new-update" id="new-update"><i data-lucide="plus"></i> New update</button>
+      </section>
+
+      <section class="content-grid">
+        <section class="main-content" aria-label="Update details">
+          <div class="brief-head">
+            <div>
+              <p class="eyebrow" id="period-label">PERIOD</p>
+              <h2 id="update-title">Loading update</h2>
+            </div>
+            <span class="status latest" id="edition-badge">LATEST</span>
+          </div>
+          <p class="executive-note" id="executive-note"></p>
+          <div class="filter-row" role="group" aria-label="Filter tasks">
+            <button class="filter active" data-filter="all">All</button>
+            <button class="filter" data-filter="complete">Complete</button>
+            <button class="filter" data-filter="progress">In progress</button>
+            <button class="filter" data-filter="blocked">Needs input</button>
+          </div>
+          <div id="task-list" class="task-list"></div>
+        </section>
+
+        <aside class="sidebar" aria-label="Key items">
+          <section>
+            <p class="eyebrow">DISCUSSION POINTS</p>
+            <ul id="discussion-list" class="discussion-list"></ul>
+          </section>
+          <section>
+            <p class="eyebrow">NEXT TWO WEEKS</p>
+            <ul id="next-list" class="next-list"></ul>
+          </section>
+          <button class="edit-update" id="edit-update"><i data-lucide="pencil"></i> Edit this update</button>
+        </aside>
+      </section>
+      <footer>CONFIDENTIAL - INTERNAL USE ONLY <span aria-hidden="true">&#183;</span> Prepared by Rishabh</footer>
+    </main>
+
+    <dialog id="editor-dialog">
+      <form id="update-form">
+        <div class="dialog-head"><h2 id="dialog-title">New update</h2><button class="icon-button" type="button" id="close-dialog" aria-label="Close editor" title="Close"><i data-lucide="x"></i></button></div>
+        <label>Title<input name="title" required placeholder="e.g. 29 Sep 2026" /></label>
+        <label>Period<input name="period" required placeholder="15 - 28 Sep 2026" /></label>
+        <label>Executive summary<textarea name="summary" required rows="3"></textarea></label>
+        <label>Tasks, one per line: <code>title | owner | status | detail</code><textarea name="tasks" required rows="6" placeholder="Circuit KPI mapper | Rishabh | progress | Validation and rollout underway"></textarea></label>
+        <label>Discussion points, one per line<textarea name="discussion" rows="3"></textarea></label>
+        <label>Next steps, one per line<textarea name="nextSteps" rows="3"></textarea></label>
+        <div class="dialog-actions"><button type="button" class="secondary" id="cancel-dialog">Cancel</button><button type="submit" class="primary">Save update</button></div>
+      </form>
+    </dialog>
+
+    <div class="toast" id="toast" role="status"></div>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="app.js?v=20260919-fix2"></script>
+  </body>
+</html>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="A concise archive of bi-weekly management updates." />
+    <title>Bi-Weekly Updates</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header class="masthead">
+        <div>
+          <p class="eyebrow">MANAGEMENT BRIEFING</p>
           <h1>Bi-Weekly 1:1</h1>
           <p class="subtitle">A working record of priorities, delivery, and decisions.</p>
         </div>
