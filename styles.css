@@ -12,3 +12,26 @@ button { cursor: pointer; }
 .sidebar { padding: 39px 31px; background: #f6fafb; border-left: 1px solid var(--line); }.sidebar section + section { margin-top: 36px; }.discussion-list, .next-list { margin: 0; padding: 0; list-style: none; }.discussion-list li, .next-list li { padding: 11px 0; border-bottom: 1px solid var(--line); color: #3e5568; font-size: 13px; line-height: 1.5; }.discussion-list li::before { content: "?"; display: inline-grid; place-items: center; width: 18px; height: 18px; margin-right: 8px; color: #9a650d; border-radius: 50%; background: var(--amber); font: 700 12px "DM Mono", monospace; }.next-list li::before { content: "→"; margin-right: 8px; color: var(--aqua-dark); font-weight: 800; }.edit-update { width: 100%; margin-top: 35px; border: 1px solid var(--aqua); border-radius: 4px; background: transparent; color: var(--aqua-dark); padding: 10px; font-weight: 800; font-size: 13px; }.edit-update:hover { background: #e2f7fb; }footer { padding: 17px; background: #082c3d; color: #adc6d0; text-align: center; font: 10px "DM Mono", monospace; }
 dialog { width: min(650px, calc(100% - 32px)); max-height: calc(100vh - 32px); border: 0; border-radius: 7px; box-shadow: 0 24px 60px #102c4366; }dialog::backdrop { background: #102c437a; }form { display: grid; gap: 15px; } .dialog-head { display: flex; justify-content: space-between; align-items: center; }.dialog-head h2 { margin: 0; font-size: 21px; }.dialog-head .icon-button { color: var(--ink); border-color: var(--line); }form label { display: grid; gap: 6px; color: var(--ink); font-size: 13px; font-weight: 700; }input, textarea { width: 100%; border: 1px solid var(--line); border-radius: 4px; padding: 9px; color: var(--ink); resize: vertical; font-weight: 400; }code { color: var(--aqua-dark); font-size: 11px; }.dialog-actions { display: flex; justify-content: flex-end; gap: 10px; }.secondary { border: 1px solid var(--line); border-radius: 4px; background: white; color: var(--ink); padding: 10px 14px; font-weight: 800; }.toast { position: fixed; bottom: 24px; left: 50%; transform: translate(-50%, 80px); padding: 10px 16px; border-radius: 4px; background: var(--ink); color: white; font-size: 13px; opacity: 0; transition: .2s; }.toast.visible { transform: translate(-50%, 0); opacity: 1; }
 @media (max-width: 760px) { .shell { width: 100%; margin: 0; border-radius: 0; }.masthead { padding: 32px 24px; min-height: 150px; }.masthead h1 { font-size: 27px; }.overview { grid-template-columns: 1fr 1fr; padding: 20px 24px; }.edition-control { grid-column: 1 / -1; }.new-update { grid-column: 1 / -1; }.content-grid { grid-template-columns: 1fr; }.main-content { padding: 30px 24px; }.sidebar { padding: 30px 24px; border-left: 0; border-top: 1px solid var(--line); }.task { grid-template-columns: 8px minmax(0, 1fr) 82px; gap: 10px; }.task .owner { grid-column: 2; }.task-status { grid-column: 3; grid-row: 1 / span 2; }.summary-stat { margin-top: 3px; } }
+
+/* Cisco-inspired dark theme */
+:root { color-scheme: dark; --ink: #e6f1f5; --ink-soft: #a9bdc8; --paper: #14232f; --canvas: #08151f; --line: #304653; --mint: #164936; --amber: #5a421c; --rose: #5a292d; }
+body { background: radial-gradient(circle at 80% 10%, #123c4b 0, transparent 23rem), var(--canvas); color: var(--ink); }
+.shell { background: var(--paper); box-shadow: 0 22px 45px #00000055; }
+.overview { border-color: var(--line); background: #101e29; }
+.edition-control label, .summary-stat small, .owner, .task p, .executive-note { color: var(--ink-soft); }
+.edition-control select, input, textarea { border-color: var(--line); background: #0d1b25; color: var(--ink); }
+.filter { border-color: var(--line); background: #1a2d3a; color: var(--ink-soft); }
+.filter.active { border-color: var(--aqua); background: #087c9f; color: white; }
+.task { border-color: var(--line); background: #172936; }
+.task-status.progress { color: #8de4f4; background: #164b5c; }
+.task-status.complete { color: #9ce4bd; background: #164936; }
+.task-status.blocked { color: #ffd48a; background: #5a421c; }
+.sidebar { background: #0f202b; border-color: var(--line); }
+.discussion-list li, .next-list li { border-color: var(--line); color: #c1d2da; }
+.edit-update { color: #69d9ef; }
+.edit-update:hover { background: #123d4b; }
+dialog { background: #14232f; color: var(--ink); }
+.dialog-head .icon-button { color: var(--ink); border-color: var(--line); }
+form label { color: var(--ink); }
+.secondary { border-color: var(--line); background: #1a2d3a; color: var(--ink); }
+code { color: #69d9ef; }
