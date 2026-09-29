@@ -1,5 +1,5 @@
 const storageKey = "biweekly-management-updates";
-const starterUpdates = [
+const starterUpdates = [   {     id: "2026-09-30", title: "30 Sep 2026", period: "30 Sep 2026",     summary: "Evaluating JIO Agentic AI PCA connectivity options and validating IPv4/IPv6 dual stack. The legacy PCA Onboard orchestrator was rejected by the customer. Private 5G VM setup is complete; network connectivity and routing dependencies remain in progress.",     tasks: [       { title: "JIO - Agentic AI", owner: "Rahul / JIO NPE / Waquar", status: "progress", detail: "Evaluating two SFP-to-Agentic PCA connectivity options with the JIO NPE team and Waquar: Delhi sensor reachability versus Nagpur sensor onboarding. Validating PCA IPv4/IPv6 dual stack. The customer rejected the legacy PCA Onboard orchestrator; this was conveyed to the Cisco AI team on the daily call." },       { title: "JIO - Private 5G", owner: "Rahul / JIO internal teams", status: "progress", detail: "VM setup is completed and ready from our end. Actively collaborating with internal JIO teams to close pending network connectivity and routing dependencies." }     ],     discussion: [],     nextSteps: []   },
   {
     id: "2026-09-15", title: "15 Sep 2026", period: "15 - 28 Sep 2026",
     summary: "Progress continues across the SKO upgrade, enterprise monitoring, Private 5G monitoring, and TWAMP dashboard activities. The immediate focus is applying the validated SKO workaround, aligning validation plans with JIO and TAC, and closing dashboard testing findings.",
@@ -14,7 +14,7 @@ const starterUpdates = [
   }
 ]
 
-let updates = (JSON.parse(localStorage.getItem(storageKey) || "null") || starterUpdates).filter((update) => update.id !== "2026-09-01");
+const savedUpdates = JSON.parse(localStorage.getItem(storageKey) || "null"); let updates = savedUpdates   ? [...starterUpdates.filter((item) => !savedUpdates.some((update) => update.id === item.id)), ...savedUpdates.filter((update) => update.id !== "2026-09-01")]   : starterUpdates;
 const requestedUpdate = new URLSearchParams(location.search).get("update");
 let currentId = requestedUpdate || updates[0].id;
 let activeFilter = "all";
