@@ -35,3 +35,6 @@ dialog { background: #14232f; color: var(--ink); }
 form label { color: var(--ink); }
 .secondary { border-color: var(--line); background: #1a2d3a; color: var(--ink); }
 code { color: #69d9ef; }
+
+.summary-stat { display: none; }
+.overview { grid-template-columns: minmax(255px, 1fr) auto; }
