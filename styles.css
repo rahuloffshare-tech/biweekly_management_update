@@ -38,3 +38,6 @@ code { color: #69d9ef; }
 
 .summary-stat { display: none; }
 .overview { grid-template-columns: minmax(255px, 1fr) auto; }
+
+.new-update, .edit-update { display: none !important; }
+.overview { grid-template-columns: minmax(255px, 1fr); }
