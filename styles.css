@@ -41,3 +41,5 @@ code { color: #69d9ef; }
 
 .new-update, .edit-update { display: inline-flex !important; }
 .overview { grid-template-columns: minmax(255px, 1fr) auto; }
+
+.sidebar section { display: none !important; }
