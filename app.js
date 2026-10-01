@@ -16,48 +16,13 @@ const starterUpdates = [   {     id: "2026-09-30", title: "30 Sep 2026", period:
 
 const savedUpdates = JSON.parse(localStorage.getItem(storageKey) || "null"); let updates = savedUpdates   ? [       ...starterUpdates.filter((item) => !savedUpdates.some((update) => update.id === item.id)),       ...savedUpdates         .filter((update) => update.id !== "2026-09-01")         .map((update) => {           if (update.id !== "2026-09-30") return update;           const savedTasks = update.tasks || [];                      return { ...update, tasks: savedTasks.filter((task) => task.title !== "TWAMP platform upgrade - JCP and CNAAP") };         })     ]   : starterUpdates;
 updates = updates.map((update) => { if (update.id !== "2026-09-30" && update.id !== "2026-09-15") return update; const starterUpdate = starterUpdates.find((item) => item.id === update.id); const twampTask = starterUpdate.tasks.find((task) => task.title === "TWAMP platform upgrade"); const tasks = update.tasks || []; return tasks.some((task) => task.title === twampTask.title) ? update : { ...update, tasks: [...tasks, twampTask] }; }); updates = updates.map((update) => ({ ...update, tasks: (update.tasks || []).map((task) => ({ ...task, owner: (task.owner || "").replace("Rahul", "Rahul") })) })); updates = updates.map((update) => { if (update.id !== "2026-09-30") return update; const starterUpdate = starterUpdates.find((item) => item.id === update.id); const tasks = update.tasks || []; const missingTasks = starterUpdate.tasks.filter((starterTask) => !tasks.some((task) => task.title === starterTask.title)); return missingTasks.length ? { ...update, tasks: [...tasks, ...missingTasks] } : update; }); updates = updates.map((update) => { if (update.id !== "2026-09-30" && update.id !== "2026-09-15") return update; const starterUpdate = starterUpdates.find((item) => item.id === update.id); const tasks = update.tasks || []; const missingTasks = starterUpdate.tasks.filter((starterTask) => !tasks.some((task) => task.title === starterTask.title)); return missingTasks.length ? { ...update, tasks: [...tasks, ...missingTasks] } : update; }); updates = updates.map((update) => ({ ...update, tasks: Array.from(new Map((update.tasks || []).map((task) => [task.title, task])).values()) })); updates = updates.map((update) => ({ ...update, tasks: (update.tasks || []).filter((task) => task.title !== "TWAMP platform upgrade - JCP and CNAAP") })); updates = updates.map((update) => ({ ...update, tasks: (update.tasks || []).filter((task) => task.title !== "TWAMP Dashboard") })); const removedTaskTitlesByEdition = {
-  "2026-09-30": new Set(["JIO - Agentic AI", "PCA + CNC integration architecture changes"]),
+  "2026-09-30": new Set(["JIO - Agentic AI", "JIO - Agentic AI - CA-CNC", "PCA + CNC integration architecture changes"]),
   "2026-09-15": new Set(["SKO upgrades", "TWAMP session monitoring dashboards"])
 };
 updates = updates.map((update) => {
   const removedTaskTitles = removedTaskTitlesByEdition[update.id];
   return removedTaskTitles ? { ...update, tasks: (update.tasks || []).filter((task) => !removedTaskTitles.has(task.title)) } : update;
 });
-const screenshotUpdates = [
-  {
-    id: "2026-09-30", title: "30 Sep 2026", period: "30 Sep 2026",
-    summary: "Evaluating JIO Agentic AI PCA connectivity options and validating IPv4/IPv6 dual stack. The legacy PCA Onboard orchestrator was rejected by the customer. Private 5G VM setup is complete; network connectivity and routing dependencies remain in progress.",
-    tasks: [
-      { title: "JIO - Agentic AI - CA-CNC", owner: "Pooja and Rahul / JIO NPE", status: "progress", detail: "Evaluating two SFP-to-Agentic PCA connectivity options with the JIO NPE team and Waqar. Delhi sensor reachability versus Nagpur sensor onboarding. Validating PCA IPv4/IPv6 dual stack. The customer rejected the legacy PCA Onboard orchestrator; this was conveyed to the Cisco AI team on the daily call." },
-      { title: "JIO - Private 5G", owner: "Rahul / JIO internal teams", status: "progress", detail: "VM setup is completed and ready from our end. Actively collaborating with internal JIO teams to close pending network connectivity and routing dependencies." },
-      { title: "TWAMP platform upgrade", owner: "Rahul", status: "progress", detail: "Migration from XML to CSV is complete and validated across JCP and CNAAP platforms. TWAMP software upgrades are now underway. Please note a 2-hour maintenance window per IP during which service interruptions may occur. These upgrades are intended to improve system stability, supportability, and operational efficiency." },
-      { title: "New PCA deployment - 10K session support", owner: "Pooja", status: "progress", detail: "Supporting the new PCA deployment designed to support 10K sessions." }
-    ]
-  },
-  {
-    id: "2026-09-15", title: "15 Sep 2026", period: "15 - 28 Sep 2026",
-    summary: "Progress continues across the SKO upgrade, enterprise monitoring, Private 5G monitoring, and TWAMP dashboard activities. The immediate focus is applying the validated SKO workaround, aligning validation plans with JIO and TAC.",
-    tasks: [
-      { title: "RJIO TWAMP Enterprise monitoring enhancement", owner: "JITO", status: "progress", detail: "Enhancement planning has started using CPE-side SFPs. JIO responded to the proposed approach; align the test setup, validation plan, and rollout with Mr. Navin." },
-      { title: "JIO Private 5G monitoring - Gujarat", owner: "JITO", status: "progress", detail: "JIO will provide two Azure VMs for SKO and SC. Continue coordination on VM readiness, deployment requirements, and monitoring validation under TAC case SR-701316769." },
-      { title: "TWAMP platform upgrade", owner: "Rahul", status: "progress", detail: "Completed the transition from XML-based to CSV-based data collection and validated it on both JCP and CNAAP NMS platforms, ensuring compatibility and continuity for the planned TWAMP upgrades. Proceeding with the TWAMP software upgrade as planned. Each listed IP requires an approximately 2-hour maintenance window; associated TWAMP services may be temporarily interrupted or unavailable during this period. The upgrade aims to improve stability, supportability, and operational efficiency." },
-      { title: "New PCA deployment - 10K session support", owner: "Pooja", status: "progress", detail: "Supporting the new PCA deployment designed to support 10K sessions." },
-      { title: "PCA + CNC integration architecture changes", owner: "Pooja", status: "progress", detail: "Supporting changes to the existing PCA setup for the PCA + CNC integration architecture, including use of the built-in PCA orchestrator for session provisioning from CNC during session creation or modification." }
-    ]
-  }
-];
-const screenshotUpdatesVersionKey = `${storageKey}-screenshot-updates-version`;
-const screenshotUpdatesVersion = "2026-10-01-v1";
-if (localStorage.getItem(screenshotUpdatesVersionKey) !== screenshotUpdatesVersion) {
-  updates = updates.map((update) => {
-    const screenshotUpdate = screenshotUpdates.find((item) => item.id === update.id);
-    return screenshotUpdate ? { ...update, ...screenshotUpdate } : update;
-  });
-  screenshotUpdates.forEach((screenshotUpdate) => {
-    if (!updates.some((update) => update.id === screenshotUpdate.id)) updates.push(screenshotUpdate);
-  });
-  localStorage.setItem(screenshotUpdatesVersionKey, screenshotUpdatesVersion);
-}
 localStorage.setItem(storageKey, JSON.stringify(updates));
 const requestedUpdate = new URLSearchParams(location.search).get("update");
 let currentId = requestedUpdate || updates[0].id;
