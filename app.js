@@ -24,6 +24,13 @@ updates = updates.map((update) => {
   return removedTaskTitles ? { ...update, tasks: (update.tasks || []).filter((task) => !removedTaskTitles.has(task.title)) } : update;
 });
 localStorage.setItem(storageKey, JSON.stringify(updates));
+const canonicalAgenticTask = { title: "JIO - Agentic AI - CA-CNC", owner: "Pooja and Rahul / JIO teams", status: "progress", detail: "Evaluating two SFP-to-Agentic PCA connectivity options with the JIO NPE team and Waqar. Delhi sensor reachability versus Nagpur sensor onboarding. Validating PCA IPv4/IPv6 dual stack. The customer rejected the legacy PCA Onboard orchestrator; this was conveyed to the Cisco AI team on the daily call." };
+updates = updates.map((update) => {
+  if (update.id !== "2026-09-30") return update;
+  const tasks = (update.tasks || []).filter((task) => task.title !== "JIO - Agentic AI");
+  const hasCanonicalTask = tasks.some((task) => task.title === canonicalAgenticTask.title);
+  return { ...update, tasks: hasCanonicalTask ? tasks.map((task) => task.title === canonicalAgenticTask.title ? canonicalAgenticTask : task) : [...tasks, canonicalAgenticTask] };
+});
 const requestedUpdate = new URLSearchParams(location.search).get("update");
 let currentId = requestedUpdate || updates[0].id;
 let activeFilter = "all";
@@ -53,14 +60,7 @@ function render()
   refreshIcons();
 }
 
-function saveUpdates() { const canonicalAgenticTask = { title: "JIO - Agentic AI - CA-CNC", owner: "Pooja and Rahul / JIO teams", status: "progress", detail: "Evaluating two SFP-to-Agentic PCA connectivity options with the JIO NPE team and Waqar. Delhi sensor reachability versus Nagpur sensor onboarding. Validating PCA IPv4/IPv6 dual stack. The customer rejected the legacy PCA Onboard orchestrator; this was conveyed to the Cisco AI team on the daily call." };
-updates = updates.map((update) => {
-  if (update.id !== "2026-09-30") return update;
-  const tasks = (update.tasks || []).filter((task) => task.title !== "JIO - Agentic AI");
-  const hasCanonicalTask = tasks.some((task) => task.title === canonicalAgenticTask.title);
-  return { ...update, tasks: hasCanonicalTask ? tasks.map((task) => task.title === canonicalAgenticTask.title ? canonicalAgenticTask : task) : [...tasks, canonicalAgenticTask] };
-});
-localStorage.setItem(storageKey, JSON.stringify(updates)); }
+function saveUpdates() { localStorage.setItem(storageKey, JSON.stringify(updates)); }
 function toast(message) { $("#toast").textContent = message; $("#toast").classList.add("visible"); setTimeout(() => $("#toast").classList.remove("visible"), 2400); }
 function listLines(text) { return text.split("\n").map((item) => item.trim()).filter(Boolean); }
 function taskLines(tasks) { return tasks.map((task) => `${task.title} | ${task.owner} | ${task.status} | ${task.detail}`).join("\n"); }
