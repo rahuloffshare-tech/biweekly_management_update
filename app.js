@@ -25,7 +25,7 @@ updates = updates.map((update) => {
 });
 updates = updates.map((update) => {
   if (update.id !== "2026-09-30" && update.id !== "2026-09-15") return update;
-  const task = { title: "TWAMP session monitoring dashboards", owner: "Pooja", status: "progress", detail: "Dashboard development is complete. Testing and bug fixes are in progress." };
+  const task = { title: "TWAMP session monitoring dashboards", owner: "Pooja", status: "progress", detail: "Dashboard development is complete. Session automation testing and bug fixes are in progress." };
   const tasks = update.tasks || [];
   return tasks.some((item) => item.title === task.title)
     ? { ...update, tasks: tasks.map((item) => item.title === task.title ? task : item) }
