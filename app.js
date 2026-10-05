@@ -31,6 +31,17 @@ updates = updates.map((update) => {
     ? { ...update, tasks: tasks.map((item) => item.title === task.title ? task : item) }
     : { ...update, tasks: [...tasks, task] };
 });
+updates = updates.map((update) => {
+  if (update.id !== "2026-09-30") return update;
+  const task = {
+    title: "RJIO TWAMP Enterprise monitoring enhancement",
+    owner: "Rahul / JIO",
+    status: "progress",
+    detail: "Enhancement planning has started using CPE-side SFPs. JIO responded to the proposed approach; align the test setup, validation plan, and rollout with Mr. Navin. Internal meetings are ongoing with customers for solution designing."
+  };
+  const tasks = (update.tasks || []).filter((item) => item.title !== task.title);
+  return { ...update, tasks: [...tasks, task] };
+});
 localStorage.setItem(storageKey, JSON.stringify(updates));
 const canonicalAgenticTask = { title: "JIO - Agentic AI - CA-CNC", owner: "Pooja and Rahul / JIO teams", status: "progress", detail: "Evaluating two SFP-to-Agentic PCA connectivity options with the JIO NPE team and Waqar. Delhi sensor reachability versus Nagpur sensor onboarding. Validating PCA IPv4/IPv6 dual stack. The customer rejected the legacy PCA Onboard orchestrator; this was conveyed to the Cisco AI team on the daily call." };
 updates = updates.map((update) => {
@@ -39,6 +50,15 @@ updates = updates.map((update) => {
   const hasCanonicalTask = tasks.some((task) => task.title === canonicalAgenticTask.title);
   return { ...update, tasks: hasCanonicalTask ? tasks.map((task) => task.title === canonicalAgenticTask.title ? canonicalAgenticTask : task) : [...tasks, canonicalAgenticTask] };
 });
+updates = updates.map((update) => {
+  if (update.id !== "2026-09-30") return update;
+  const tasks = update.tasks || [];
+  const enterpriseTask = tasks.find((task) => task.title === "RJIO TWAMP Enterprise monitoring enhancement");
+  return enterpriseTask
+    ? { ...update, tasks: [...tasks.filter((task) => task.title !== enterpriseTask.title), enterpriseTask] }
+    : update;
+});
+localStorage.setItem(storageKey, JSON.stringify(updates));
 const requestedUpdate = new URLSearchParams(location.search).get("update");
 let currentId = requestedUpdate || updates[0].id;
 let activeFilter = "all";
