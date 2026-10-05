@@ -25,9 +25,11 @@ updates = updates.map((update) => {
 });
 updates = updates.map((update) => {
   if (update.id !== "2026-09-30" && update.id !== "2026-09-15") return update;
-  const task = { title: "TWAMP session monitoring dashboards", owner: "Rahul", status: "progress", detail: "Dashboard development is complete. Testing and bug fixes are in progress." };
+  const task = { title: "TWAMP session monitoring dashboards", owner: "Pooja", status: "progress", detail: "Dashboard development is complete. Testing and bug fixes are in progress." };
   const tasks = update.tasks || [];
-  return tasks.some((item) => item.title === task.title) ? update : { ...update, tasks: [...tasks, task] };
+  return tasks.some((item) => item.title === task.title)
+    ? { ...update, tasks: tasks.map((item) => item.title === task.title ? task : item) }
+    : { ...update, tasks: [...tasks, task] };
 });
 localStorage.setItem(storageKey, JSON.stringify(updates));
 const canonicalAgenticTask = { title: "JIO - Agentic AI - CA-CNC", owner: "Pooja and Rahul / JIO teams", status: "progress", detail: "Evaluating two SFP-to-Agentic PCA connectivity options with the JIO NPE team and Waqar. Delhi sensor reachability versus Nagpur sensor onboarding. Validating PCA IPv4/IPv6 dual stack. The customer rejected the legacy PCA Onboard orchestrator; this was conveyed to the Cisco AI team on the daily call." };
